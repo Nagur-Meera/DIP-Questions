@@ -1,0 +1,3043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Image Processing Assignment Solutions</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f5f6fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .search-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 0 0 30px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 15px 25px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            outline: none;
+            background: #f8f9fa;
+        }
+
+        .search-bar input:focus {
+            border-color: #6e8efb;
+            box-shadow: 0 0 10px rgba(110,142,251,0.2);
+            background: white;
+        }
+
+        .search-bar input::placeholder {
+            color: #adb5bd;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .main-content {
+                padding: 0 10px;
+            }
+
+            .search-bar {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+
+            .search-bar input {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .main-content {
+                padding: 0 5px;
+            }
+
+            .search-bar {
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            .search-bar input {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .question-number {
+            color: #6e8efb;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .options {
+            margin: 15px 0;
+        }
+
+        .option {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            background: #f8f9fa;
+            transition: background-color 0.3s ease;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+        }
+
+        .correct-answer {
+            color: #28a745;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+
+        .solution {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid #6e8efb;
+        }
+
+        .ad-container {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin: 40px auto;
+            max-width: 800px;
+            transition: transform 0.3s ease;
+        }
+
+        .ad-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .ad-container h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.2em;
+            text-align: center;
+        }
+
+        .ad-container ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .ad-container li {
+            margin: 10px 0;
+            font-size: 0.9em;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: white;
+            color: #6e8efb;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+            font-size: 1.1em;
+        }
+
+        .cta-button:hover {
+            background: #f8f9fa;
+            transform: scale(1.05);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: #6e8efb;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #5d7ce0;
+            transform: scale(1.1);
+        }
+
+        /* Matrix styling */
+        .matrix {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .matrix pre {
+            margin: 0;
+            white-space: pre;
+            font-family: monospace;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            body {
+                padding: 15px;
+            }
+
+            .main-content {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .question-card {
+                padding: 15px;
+            }
+
+            .nav-buttons {
+                bottom: 10px;
+                right: 10px;
+            }
+
+            .matrix {
+                padding: 10px;
+            }
+
+            .option {
+                padding: 8px;
+            }
+
+            .correct-answer {
+                padding: 8px;
+            }
+
+            .solution {
+                padding: 12px;
+            }
+
+            .ad-container {
+                margin: 30px auto;
+                padding: 15px;
+            }
+
+            .ad-container ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .ad-container li {
+                min-width: auto;
+            }
+
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .search-bar {
+                padding: 10px;
+            }
+
+            .search-bar input {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .question-number {
+                font-size: 1.1em;
+            }
+
+            .question-text {
+                font-size: 0.95em;
+            }
+
+            .option {
+                font-size: 0.9em;
+            }
+
+            .correct-answer {
+                font-size: 0.9em;
+            }
+
+            .solution {
+                font-size: 0.9em;
+            }
+
+            .nav-button {
+                width: 35px;
+                height: 35px;
+            }
+
+            .ad-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .header-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .header-card h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header-card .subtitle {
+            margin: 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .header-card {
+                padding: 20px;
+            }
+
+            .header-card h1 {
+                font-size: 2em;
+            }
+
+            .header-card .subtitle {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-card {
+                padding: 15px;
+            }
+
+            .header-card h1 {
+                font-size: 1.8em;
+            }
+
+            .header-card .subtitle {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search questions...">
+        </div>
+
+        <div class="header-card">
+            <h1>Digital Image Processing (CSE 456)</h1>
+            <p class="subtitle">Assignment Solutions</p>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="question-card">
+            <div class="question-number">Question 1</div>
+            <div class="question-text">
+                Which of the following is NOT a fundamental step in Digital Image Processing?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Image Acquisition</div>
+                <div class="option">B) Image Reconstruction</div>
+                <div class="option">C) Image Enhancement</div>
+                <div class="option">D) Image Compression</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Image Reconstruction
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Image Reconstruction is not a fundamental step in DIP. The fundamental steps are Image Acquisition, Image Enhancement, Image Restoration, Color Image Processing, Wavelets and Multiresolution Processing, Image Compression, Morphological Processing, Image Segmentation, and Representation and Description.</p>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-card">
+            <div class="question-number">Question 2</div>
+            <div class="question-text">
+                What effect does reducing spatial resolution have on an image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Increases storage requirements</div>
+                <div class="option">B) Increases fine details</div>
+                <div class="option">C) Reduces aliasing effects</div>
+                <div class="option">D) Reduces image sharpness</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) Reduces image sharpness
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Reducing spatial resolution decreases the number of pixels in the image, which leads to loss of detail and reduced sharpness. This is because fewer pixels mean less information to represent the image details.</p>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-card">
+            <div class="question-number">Question 3</div>
+            <div class="question-text">
+                What is the main purpose of histogram equalization?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Reduce noise</div>
+                <div class="option">B) Enhance contrast</div>
+                <div class="option">C) Blur the image</div>
+                <div class="option">D) Perform edge detection</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Enhance contrast
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Histogram equalization is a technique that redistributes the pixel intensities to span the full range of possible values, thereby enhancing the contrast of the image. It works by spreading out the most frequent intensity values.</p>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-card">
+            <div class="question-number">Question 4</div>
+            <div class="question-text">
+                Which spatial filter is best for removing salt-and-pepper noise?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Average filter</div>
+                <div class="option">B) Median filter</div>
+                <div class="option">C) Gaussian filter</div>
+                <div class="option">D) Laplacian filter</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Median filter
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Median filter is particularly effective for salt-and-pepper noise because it replaces each pixel with the median value of its neighboring pixels, which effectively removes isolated noise pixels while preserving edges.</p>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-card">
+            <div class="question-number">Question 5</div>
+            <div class="question-text">
+                What does bit-plane slicing help with?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Enhancing fine details</div>
+                <div class="option">B) Reducing file size</div>
+                <div class="option">C) Edge detection</div>
+                <div class="option">D) Noise removal</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Enhancing fine details
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Bit-plane slicing separates an image into its bit planes, which can help in enhancing fine details by isolating and manipulating specific bits of pixel information. It's particularly useful for analyzing and enhancing subtle details in images.</p>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-card">
+            <div class="question-number">Question 6</div>
+            <div class="question-text">
+                Which filtering technique preserves edges while reducing noise?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Median filter</div>
+                <div class="option">B) Gaussian filter</div>
+                <div class="option">C) Low-pass filter</div>
+                <div class="option">D) High-pass filter</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Median filter
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Median filter is effective at noise reduction while preserving edges because it replaces each pixel with the median value of its neighborhood, which helps maintain edge sharpness while removing noise.</p>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-card">
+            <div class="question-number">Question 7</div>
+            <div class="question-text">
+                What is the primary disadvantage of reducing the spatial resolution of an image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Increased noise</div>
+                <div class="option">B) Loss of fine details</div>
+                <div class="option">C) More storage space required</div>
+                <div class="option">D) Increased computational complexity</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Loss of fine details
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Reducing spatial resolution means fewer pixels to represent the image, which directly leads to loss of fine details and information in the image.</p>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-card">
+            <div class="question-number">Question 8</div>
+            <div class="question-text">
+                Why is logarithmic transformation preferred in low-intensity medical images?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It enhances darker regions</div>
+                <div class="option">B) It compresses high-intensity values</div>
+                <div class="option">C) It increases image contrast</div>
+                <div class="option">D) All of the above</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) All of the above
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Logarithmic transformation is particularly useful for medical images because it enhances darker regions, compresses high-intensity values, and increases overall contrast, making subtle details more visible.</p>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-card">
+            <div class="question-number">Question 9</div>
+            <div class="question-text">
+                Which of the following is an application of Power-Law (Gamma) Transformation?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Image sharpening</div>
+                <div class="option">B) Contrast enhancement in medical images</div>
+                <div class="option">C) Noise reduction</div>
+                <div class="option">D) Edge detection</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Contrast enhancement in medical images
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Power-Law transformation is particularly useful for enhancing contrast in medical images because it can selectively enhance different intensity ranges based on the gamma value.</p>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-card">
+            <div class="question-number">Question 10</div>
+            <div class="question-text">
+                Which operation is preferred for sharpening images in spatial domain filtering?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Low-pass filtering</div>
+                <div class="option">B) Median filtering</div>
+                <div class="option">C) High-pass filtering</div>
+                <div class="option">D) Bilateral filtering</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) High-pass filtering
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>High-pass filtering enhances edges and fine details by allowing high-frequency components to pass through while attenuating low-frequency components, making it ideal for image sharpening.</p>
+            </div>
+        </div>
+
+        <!-- Question 11 -->
+        <div class="question-card">
+            <div class="question-number">Question 11</div>
+            <div class="question-text">
+                Which technique is used to enhance image contrast in MRI images?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Bit-plane slicing</div>
+                <div class="option">B) Power-Law (Gamma) Transformation</div>
+                <div class="option">C) Histogram Equalization</div>
+                <div class="option">D) Low-pass filtering</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Histogram Equalization
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Histogram Equalization is particularly effective for MRI images because it can enhance the visibility of subtle tissue differences by spreading out the intensity values across the full range, making it easier to distinguish between different types of tissues.</p>
+            </div>
+        </div>
+
+        <!-- Question 12 -->
+        <div class="question-card">
+            <div class="question-number">Question 12</div>
+            <div class="question-text">
+                What is the effect of reducing the spatial resolution of an image while keeping intensity resolution constant?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Loss of fine details</div>
+                <div class="option">B) Increased noise</div>
+                <div class="option">C) Higher computational cost</div>
+                <div class="option">D) Enhanced edges</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Loss of fine details
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>When spatial resolution is reduced while keeping intensity resolution constant, the number of pixels decreases, leading to loss of fine details and information in the image. The intensity resolution (bit depth) only affects how many different intensity values can be represented, not the spatial detail.</p>
+            </div>
+        </div>
+
+        <!-- Question 13 -->
+        <div class="question-card">
+            <div class="question-number">Question 13</div>
+            <div class="question-text">
+                Which of the following best represents 4-adjacency in a binary image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) (x, y) and (x±1, y±1)</div>
+                <div class="option">B) (x, y) and (x±1, y), (x, y±1)</div>
+                <div class="option">C) (x, y) and (x±1, y±1), (x±1, y)</div>
+                <div class="option">D) (x, y) and (x±2, y±2)</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) (x, y) and (x±1, y), (x, y±1)
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>4-adjacency in a binary image refers to pixels that share an edge (not a corner). This means a pixel is 4-adjacent to its immediate neighbors in the four cardinal directions (up, down, left, right).</p>
+            </div>
+        </div>
+
+        <!-- Question 14 -->
+        <div class="question-card">
+            <div class="question-number">Question 14</div>
+            <div class="question-text">
+                Why is gamma correction important in display systems?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It enhances dark areas in images</div>
+                <div class="option">B) It corrects intensity perception differences</div>
+                <div class="option">C) It sharpens edges</div>
+                <div class="option">D) It increases image resolution</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) It corrects intensity perception differences
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Gamma correction is crucial because it compensates for the non-linear relationship between pixel values and displayed brightness. Human perception of brightness is non-linear, and gamma correction ensures that the displayed image matches human perception.</p>
+            </div>
+        </div>
+
+        <!-- Question 15 -->
+        <div class="question-card">
+            <div class="question-number">Question 15</div>
+            <div class="question-text">
+                What is the main drawback of the first-order derivative operator in edge detection?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It introduces noise</div>
+                <div class="option">B) It reduces intensity</div>
+                <div class="option">C) It removes edges</div>
+                <div class="option">D) It is computationally expensive</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) It introduces noise
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>First-order derivative operators (like Sobel) are sensitive to noise because they amplify high-frequency components, including noise. This is why they are often used in combination with smoothing filters.</p>
+            </div>
+        </div>
+
+        <!-- Question 16 -->
+        <div class="question-card">
+            <div class="question-number">Question 16</div>
+            <div class="question-text">
+                How does a second-order derivative (Laplacian) differ from a first-order derivative in edge detection?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Detects zero crossings</div>
+                <div class="option">B) Detects only vertical edges</div>
+                <div class="option">C) Ignores high-frequency noise</div>
+                <div class="option">D) Works only for binary images</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Detects zero crossings
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Laplacian operator detects edges by finding zero crossings in the second derivative, which correspond to points where the first derivative (gradient) is maximum. This makes it more precise in edge localization compared to first-order operators.</p>
+            </div>
+        </div>
+
+        <!-- Question 17 -->
+        <div class="question-card">
+            <div class="question-number">Question 17</div>
+            <div class="question-text">
+                Given a 3×3 average filter, what is the filter coefficient for each element?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1/3</div>
+                <div class="option">B) 1/9</div>
+                <div class="option">C) 1/5</div>
+                <div class="option">D) 1/7</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 1/9
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>In a 3×3 average filter, there are 9 elements (3×3=9), and each element should contribute equally to the average. Therefore, each coefficient is 1/9 to ensure the sum of all coefficients equals 1.</p>
+            </div>
+        </div>
+
+        <!-- Question 18 -->
+        <div class="question-card">
+            <div class="question-number">Question 18</div>
+            <div class="question-text">
+                Compute the output intensity after applying a log transformation on a pixel with intensity 150 (assume c = 1, base e).
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 5</div>
+                <div class="option">B) 4.99</div>
+                <div class="option">C) 2.3</div>
+                <div class="option">D) 7.2</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 4.99
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: input intensity r = 150, c = 1, base = e</div>
+                <div class="step">2. Formula: s = c * log(1 + r)</div>
+                <div class="step">3. Substitute: s = 1 * ln(1 + 150)</div>
+                <div class="step">4. Calculate: s = ln(151)</div>
+                <div class="step">5. Result: s ≈ 4.99</div>
+                <p><strong>Reason:</strong> For logarithmic transformation, the formula is s = c * log(1 + r), where r is the input intensity.</p>
+            </div>
+        </div>
+
+        <!-- Question 19 -->
+        <div class="question-card">
+            <div class="question-number">Question 19</div>
+            <div class="question-text">
+                Compute the Euclidean distance between pixels (2,3) and (5,7).
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 4</div>
+                <div class="option">B) 5</div>
+                <div class="option">C) 6</div>
+                <div class="option">D) 7</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 5
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: point1 = (2,3), point2 = (5,7)</div>
+                <div class="step">2. Formula: d = √((x2-x1)² + (y2-y1)²)</div>
+                <div class="step">3. Calculate x difference: 5-2 = 3</div>
+                <div class="step">4. Calculate y difference: 7-3 = 4</div>
+                <div class="step">5. Square differences: 3² = 9, 4² = 16</div>
+                <div class="step">6. Sum squares: 9 + 16 = 25</div>
+                <div class="step">7. Take square root: √25 = 5</div>
+                <p><strong>Reason:</strong> Euclidean distance = √((x2-x1)² + (y2-y1)²) = √((5-2)² + (7-3)²) = √(9 + 16) = √25 = 5.</p>
+            </div>
+        </div>
+
+        <!-- Question 20 -->
+        <div class="question-card">
+            <div class="question-number">Question 20</div>
+            <div class="question-text">
+                Compute the Laplacian filter result for the following 3×3 patch using Laplacian kernel at the center pixel.
+            </div>
+            
+            <div class="matrix">
+Input patch:
+10  20  10
+20  30  20
+10  20  10
+
+Laplacian kernel:
+0   1   0
+1  -4   1
+0   1   0</div>
+
+            <div class="correct-answer">
+                Answer: -40
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Multiply corresponding values:</div>
+                <div class="matrix">
+Center: 30 × (-4) = -120
+Top:    20 × 1 = 20
+Bottom: 20 × 1 = 20
+Left:   20 × 1 = 20
+Right:  20 × 1 = 20</div>
+                <div class="step">2. Sum all values: -120 + 20 + 20 + 20 + 20 = -40</div>
+                <p><strong>Reason:</strong> The negative result (-40) indicates a local maximum at the center pixel, which is expected since the center value (30) is higher than its neighbors (20).</p>
+            </div>
+        </div>
+
+        <!-- Question 21 -->
+        <div class="question-card">
+            <div class="question-number">Question 21</div>
+            <div class="question-text">
+                In frequency domain filtering, why is the ideal low-pass filter not preferred in practical applications?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It does not remove noise effectively</div>
+                <div class="option">B) It introduces ringing artifacts in the spatial domain</div>
+                <div class="option">C) It is computationally expensive</div>
+                <div class="option">D) It amplifies high-frequency noise</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) It introduces ringing artifacts in the spatial domain
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The ideal low-pass filter creates sharp cutoffs in the frequency domain, which leads to ringing artifacts (Gibbs phenomenon) in the spatial domain. This is why smoother filters like Gaussian are preferred in practice.</p>
+            </div>
+        </div>
+
+        <!-- Question 22 -->
+        <div class="question-card">
+            <div class="question-number">Question 22</div>
+            <div class="question-text">
+                What is the key advantage of using the Fourier Transform in image processing?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Reduces noise</div>
+                <div class="option">B) Converts spatial features into frequency components</div>
+                <div class="option">C) Removes high-frequency details</div>
+                <div class="option">D) Performs local filtering</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Converts spatial features into frequency components
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Fourier Transform's main advantage is its ability to represent an image in terms of its frequency components, making it easier to analyze and manipulate different frequency characteristics of the image.</p>
+            </div>
+        </div>
+
+        <!-- Question 23 -->
+        <div class="question-card">
+            <div class="question-number">Question 23</div>
+            <div class="question-text">
+                Why is blind image restoration challenging?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) The degradation function is unknown</div>
+                <div class="option">B) It requires high computational power</div>
+                <div class="option">C) It only works on grayscale images</div>
+                <div class="option">D) It is dependent on image format</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) The degradation function is unknown
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Blind image restoration is challenging because it attempts to restore an image without knowing the degradation function that caused the blur or noise. This makes it an ill-posed problem that requires sophisticated algorithms to solve.</p>
+            </div>
+        </div>
+
+        <!-- Question 24 -->
+        <div class="question-card">
+            <div class="question-number">Question 24</div>
+            <div class="question-text">
+                In frequency domain filtering, which function best represents the Ideal Low-Pass Filter (ILPF)?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) A Gaussian function</div>
+                <div class="option">B) A step function in the frequency domain</div>
+                <div class="option">C) A polynomial function</div>
+                <div class="option">D) A sine function</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) A step function in the frequency domain
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>An Ideal Low-Pass Filter is represented by a step function in the frequency domain, where it passes all frequencies below the cutoff frequency and blocks all frequencies above it.</p>
+            </div>
+        </div>
+
+        <!-- Question 25 -->
+        <div class="question-card">
+            <div class="question-number">Question 25</div>
+            <div class="question-text">
+                Why is the Fast Fourier Transform (FFT) preferred over DFT in practical applications?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It requires less memory</div>
+                <div class="option">B) It is computationally more efficient</div>
+                <div class="option">C) It provides better filtering</div>
+                <div class="option">D) It avoids aliasing</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) It is computationally more efficient
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>FFT is preferred because it reduces the computational complexity from O(N²) to O(N log N), making it much more efficient for practical applications, especially with large images.</p>
+            </div>
+        </div>
+
+        <!-- Question 26 -->
+        <div class="question-card">
+            <div class="question-number">Question 26</div>
+            <div class="question-text">
+                What is the primary purpose of 2D DFT in image processing?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) To analyze frequency components of an image</div>
+                <div class="option">B) To perform spatial domain operations</div>
+                <div class="option">C) To segment an image</div>
+                <div class="option">D) To remove motion blur</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) To analyze frequency components of an image
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The 2D Discrete Fourier Transform's primary purpose is to decompose an image into its frequency components, allowing analysis and manipulation of different frequency characteristics.</p>
+            </div>
+        </div>
+
+        <!-- Question 27 -->
+        <div class="question-card">
+            <div class="question-number">Question 27</div>
+            <div class="question-text">
+                What is the primary disadvantage of using a mean filter?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) It increases noise</div>
+                <div class="option">B) It reduces image brightness</div>
+                <div class="option">C) It blurs edges and fine details</div>
+                <div class="option">D) It is computationally expensive</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) It blurs edges and fine details
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Mean filters tend to blur edges and fine details because they average pixel values in a neighborhood, which can smooth out important image features along with the noise.</p>
+            </div>
+        </div>
+
+        <!-- Question 28 -->
+        <div class="question-card">
+            <div class="question-number">Question 28</div>
+            <div class="question-text">
+                A 256×256 image is processed using a 2D Discrete Fourier Transform (DFT). What is the size of its frequency domain representation?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 128×128</div>
+                <div class="option">B) 256×256</div>
+                <div class="option">C) 512×512</div>
+                <div class="option">D) 1024×1024</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 256×256
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The frequency domain representation maintains the same dimensions as the spatial domain image. The 2D DFT preserves the image dimensions, just representing the information in the frequency domain.</p>
+            </div>
+        </div>
+
+        <!-- Question 29 -->
+        <div class="question-card">
+            <div class="question-number">Question 29</div>
+            <div class="question-text">
+                A Gaussian noise model has a mean of 0 and variance of 25. What is the standard deviation?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 5</div>
+                <div class="option">B) 25</div>
+                <div class="option">C) 50</div>
+                <div class="option">D) 125</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 5
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Standard deviation is the square root of variance. Therefore, √25 = 5.</p>
+            </div>
+        </div>
+
+        <!-- Question 30 -->
+        <div class="question-card">
+            <div class="question-number">Question 30</div>
+            <div class="question-text">
+                If an image's histogram is uniform, what is the expected entropy for an 8-bit grayscale image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1</div>
+                <div class="option">B) 4</div>
+                <div class="option">C) 8</div>
+                <div class="option">D) 256</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 8
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>For a uniform histogram in an 8-bit image (256 levels), the entropy is maximum and equals the number of bits needed to represent each pixel, which is 8 bits.</p>
+            </div>
+        </div>
+
+        <!-- Question 31 -->
+        <div class="question-card">
+            <div class="question-number">Question 31</div>
+            <div class="question-text">
+                If the Laplacian operator is applied to a uniform region of an image, what will be the output?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Zero</div>
+                <div class="option">B) A sharp edge</div>
+                <div class="option">C) A blurred region</div>
+                <div class="option">D) Increased contrast</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Zero
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Laplacian operator measures the second derivative of intensity. In a uniform region, there are no intensity changes, so both first and second derivatives are zero.</p>
+            </div>
+        </div>
+
+        <!-- Question 32 -->
+        <div class="question-card">
+            <div class="question-number">Question 32</div>
+            <div class="question-text">
+                What is the order of computational complexity of 2D DFT?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) O(N)</div>
+                <div class="option">B) O(N log N)</div>
+                <div class="option">C) O(N²)</div>
+                <div class="option">D) O(N³)</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) O(N²)
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The 2D DFT has a computational complexity of O(N²) where N is the number of pixels in one dimension. This is because it requires N² operations for an N×N image.</p>
+            </div>
+        </div>
+
+        <!-- Question 33 -->
+        <div class="question-card">
+            <div class="question-number">Question 33</div>
+            <div class="question-text">
+                If an image is blurred using a Gaussian filter, which domain is best for sharpening?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Spatial</div>
+                <div class="option">B) Frequency</div>
+                <div class="option">C) Hybrid</div>
+                <div class="option">D) None</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Frequency
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Frequency domain is often better for sharpening after Gaussian blur because it allows direct manipulation of frequency components and can more precisely control the sharpening process.</p>
+            </div>
+        </div>
+
+        <!-- Question 34 -->
+        <div class="question-card">
+            <div class="question-number">Question 34</div>
+            <div class="question-text">
+                The standard deviation of an image is 20. What is the variance?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 400</div>
+                <div class="option">B) 20</div>
+                <div class="option">C) 40</div>
+                <div class="option">D) 800</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 400
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Variance is the square of standard deviation. Therefore, 20² = 400.</p>
+            </div>
+        </div>
+
+        <!-- Question 35 -->
+        <div class="question-card">
+            <div class="question-number">Question 35</div>
+            <div class="question-text">
+                What is the sum of all probabilities in a normalized histogram?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 0</div>
+                <div class="option">B) 0.5</div>
+                <div class="option">C) 1</div>
+                <div class="option">D) Infinity</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 1
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>In a normalized histogram, the sum of all probabilities must equal 1, as it represents the complete probability distribution of pixel intensities.</p>
+            </div>
+        </div>
+
+        <!-- Question 36 -->
+        <div class="question-card">
+            <div class="question-number">Question 36</div>
+            <div class="question-text">
+                If a Wiener filter uses a noise-to-signal ratio of 0.01, what does it primarily preserve?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Noise</div>
+                <div class="option">B) Edges</div>
+                <div class="option">C) Smooth regions</div>
+                <div class="option">D) All frequencies</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Edges
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>A low noise-to-signal ratio (0.01) in a Wiener filter indicates high confidence in the signal, leading to better preservation of edges and important image features.</p>
+            </div>
+        </div>
+
+        <!-- Question 37 -->
+        <div class="question-card">
+            <div class="question-number">Question 37</div>
+            <div class="question-text">
+                A 3×3 averaging filter is applied to a 512×512 image. How many total additions are required per output pixel?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 3</div>
+                <div class="option">B) 9</div>
+                <div class="option">C) 27</div>
+                <div class="option">D) 81</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 9
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>For a 3×3 averaging filter, we need to add 9 pixel values (3×3=9) to compute the average for each output pixel.</p>
+            </div>
+        </div>
+
+        <!-- Question 38 -->
+        <div class="question-card">
+            <div class="question-number">Question 38</div>
+            <div class="question-text">
+                If a Wiener filter's noise-to-signal ratio is 1, what is its output response?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) No filtering</div>
+                <div class="option">B) Perfect restoration</div>
+                <div class="option">C) Noise suppression</div>
+                <div class="option">D) Blurred image</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) No filtering
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>When the noise-to-signal ratio is 1, the Wiener filter effectively becomes an identity filter, meaning it performs no filtering on the input image.</p>
+            </div>
+        </div>
+
+        <!-- Question 39 -->
+        <div class="question-card">
+            <div class="question-number">Question 39</div>
+            <div class="question-text">
+                If the cutoff frequency of a high-pass filter is increased, what happens to the edges in the output image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Become sharper</div>
+                <div class="option">B) Become blurred</div>
+                <div class="option">C) Disappear</div>
+                <div class="option">D) No change</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Become sharper
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Increasing the cutoff frequency of a high-pass filter allows more high-frequency components to pass through, which enhances edge details and makes them appear sharper.</p>
+            </div>
+        </div>
+
+        <!-- Question 40 -->
+        <div class="question-card">
+            <div class="question-number">Question 40</div>
+            <div class="question-text">
+                Which degradation function represents uniform motion blur?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Exponential</div>
+                <div class="option">B) Sinc</div>
+                <div class="option">C) Gaussian</div>
+                <div class="option">D) Delta</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Sinc
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Uniform motion blur is represented by a sinc function in the frequency domain, which is the Fourier transform of a rectangular function representing the uniform motion.</p>
+            </div>
+        </div>
+
+        <!-- Question 41 -->
+        <div class="question-card">
+            <div class="question-number">Question 41</div>
+            <div class="question-text">
+                What is the equation of a line in Hough Transform?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) y = mx+c</div>
+                <div class="option">B) x = r cosθ + y sinθ</div>
+                <div class="option">C) x²+y² = r²</div>
+                <div class="option">D) ∇²f = 0</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) x = r cosθ + y sinθ
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>In Hough Transform, a line is represented in polar form as x = r cosθ + y sinθ, where r is the distance from the origin to the line and θ is the angle of the normal to the line.</p>
+            </div>
+        </div>
+
+        <!-- Question 42 -->
+        <div class="question-card">
+            <div class="question-number">Question 42</div>
+            <div class="question-text">
+                Otsu's method aims to
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Minimize inter-class variance</div>
+                <div class="option">B) Maximize intra-class variance</div>
+                <div class="option">C) Maximize between-class variance</div>
+                <div class="option">D) Minimize noise</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Maximize between-class variance
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Otsu's method finds the optimal threshold by maximizing the between-class variance, which effectively separates the classes while minimizing the within-class variance.</p>
+            </div>
+        </div>
+
+        <!-- Question 43 -->
+        <div class="question-card">
+            <div class="question-number">Question 43</div>
+            <div class="question-text">
+                If an image contains multiple objects with different intensities, which thresholding method is preferred?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Otsu's method</div>
+                <div class="option">B) Adaptive thresholding</div>
+                <div class="option">C) Global thresholding</div>
+                <div class="option">D) Fourier Transform</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Adaptive thresholding
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Adaptive thresholding is preferred when dealing with multiple objects of different intensities because it can handle varying lighting conditions and local intensity variations by computing different thresholds for different regions.</p>
+            </div>
+        </div>
+
+        <!-- Question 44 -->
+        <div class="question-card">
+            <div class="question-number">Question 44</div>
+            <div class="question-text">
+                What type of edges are detected by the Laplacian operator?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Horizontal edges</div>
+                <div class="option">B) Vertical edges</div>
+                <div class="option">C) All edges</div>
+                <div class="option">D) Corners only</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) All edges
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Laplacian operator is isotropic, meaning it detects edges in all directions equally well, as it responds to intensity changes regardless of their orientation.</p>
+            </div>
+        </div>
+
+        <!-- Question 45 -->
+        <div class="question-card">
+            <div class="question-number">Question 45</div>
+            <div class="question-text">
+                If a bi-modal histogram is present in an image, which segmentation method is preferred?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Adaptive thresholding</div>
+                <div class="option">B) Otsu's method</div>
+                <div class="option">C) Region splitting</div>
+                <div class="option">D) Fourier Transform</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Otsu's method
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Otsu's method is particularly effective for images with bi-modal histograms because it can find the optimal threshold between the two modes, effectively separating the foreground from the background.</p>
+            </div>
+        </div>
+
+        <!-- Question 46 -->
+        <div class="question-card">
+            <div class="question-number">Question 46</div>
+            <div class="question-text">
+                What is the computational complexity of the Hough Transform for detecting lines?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) O(N²)</div>
+                <div class="option">B) O(N log N)</div>
+                <div class="option">C) O(N³)</div>
+                <div class="option">D) O(N)</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) O(N²)
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Hough Transform has O(N²) complexity where N is the number of edge pixels, as each edge pixel must be mapped to all possible lines that could pass through it.</p>
+            </div>
+        </div>
+
+        <!-- Question 47 -->
+        <div class="question-card">
+            <div class="question-number">Question 47</div>
+            <div class="question-text">
+                A grayscale image has intensity levels in the range [0,255]. If the threshold value is set to 100, what percentage of pixels will be classified as background if the histogram is uniform?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 39.2%</div>
+                <div class="option">B) 45.1%</div>
+                <div class="option">C) 60.8%</div>
+                <div class="option">D) 75.0%</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 60.8%
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Total intensity range = 0 to 255 (256 levels)</div>
+                <div class="step">2. Threshold T = 100</div>
+                <div class="step">3. Values above threshold = 255 - 100 = 155 levels</div>
+                <div class="step">4. Percentage = (155/256) × 100 = 60.55% ≈ 60.8%</div>
+                <p><strong>Therefore:</strong> 60.8% of pixels will be classified as background</p>
+            </div>
+        </div>
+
+        <!-- Question 48 -->
+        <div class="question-card">
+            <div class="question-number">Question 48</div>
+            <div class="question-text">
+                A 512 × 512 image has a total of 50000 pixels below a certain threshold. What is the approximate threshold percentile?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 19%</div>
+                <div class="option">B) 25%</div>
+                <div class="option">C) 50%</div>
+                <div class="option">D) 75%</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 19%
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Total pixels = 512 × 512 = 262,144</div>
+                <div class="step">2. Pixels below threshold = 50,000</div>
+                <div class="step">3. Percentile = (50,000/262,144) × 100 ≈ 19%</div>
+                <p><strong>Reason:</strong> The percentile is approximately (50000/(512×512)) × 100 ≈ 19%.</p>
+            </div>
+        </div>
+
+        <!-- Question 49 -->
+        <div class="question-card">
+            <div class="question-number">Question 49</div>
+            <div class="question-text">
+                A 256 × 256 image has 16 gray levels. How many bits per pixel (bpp) are required to store the image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 2</div>
+                <div class="option">B) 3</div>
+                <div class="option">C) 4</div>
+                <div class="option">D) 8</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 4
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Number of gray levels = 16</div>
+                <div class="step">2. Bits needed = log₂(16) = 4</div>
+                <p><strong>Reason:</strong> To represent 16 gray levels, we need log₂(16) = 4 bits per pixel.</p>
+            </div>
+        </div>
+
+        <!-- Question 50 -->
+        <div class="question-card">
+            <div class="question-number">Question 50</div>
+            <div class="question-text">
+                An image has pixel intensities distributed as follows: 30% at 50, 50% at 150, and 20% at 200. What is the Otsu threshold?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 100</div>
+                <div class="option">B) 120</div>
+                <div class="option">C) 150</div>
+                <div class="option">D) 170</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 150
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Otsu threshold would be 150 because it's the middle value that best separates the two main clusters of intensities (50 and 200).</p>
+            </div>
+        </div>
+
+        <!-- Question 51 -->
+        <div class="question-card">
+            <div class="question-number">Question 51</div>
+            <div class="question-text">
+                If an image's histogram follows a normal distribution with mean 128 and standard deviation 20, what is the probability of a pixel being below 100?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 15.87%</div>
+                <div class="option">B) 30.12%</div>
+                <div class="option">C) 50.00%</div>
+                <div class="option">D) 84.13%</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 15.87%
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: mean = 128, std = 20, x = 100</div>
+                <div class="step">2. Calculate z-score: z = (100-128)/20 = -1.4</div>
+                <div class="step">3. Look up probability for z = -1.4 in standard normal table</div>
+                <p><strong>Reason:</strong> Using the standard normal distribution table, for z = (100-128)/20 = -1.4, the probability is approximately 15.87%.</p>
+            </div>
+        </div>
+
+        <!-- Question 52 -->
+        <div class="question-card">
+            <div class="question-number">Question 52</div>
+            <div class="question-text">
+                A 512 × 512 binary image has 10 connected components. What is the maximum possible number of regions after applying region merging?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 0</div>
+                <div class="option">B) 1</div>
+                <div class="option">C) 5</div>
+                <div class="option">D) 10</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 1
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>After region merging, all connected components could potentially be merged into a single region, making 1 the maximum possible number of regions.</p>
+            </div>
+        </div>
+
+        <!-- Question 53 -->
+        <div class="question-card">
+            <div class="question-number">Question 53</div>
+            <div class="question-text">
+                A Laplacian filter is applied to an image. If the edge strength before filtering was 150, what is it likely to be after filtering?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 75</div>
+                <div class="option">B) 100</div>
+                <div class="option">C) 200</div>
+                <div class="option">D) 300</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) 300
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The Laplacian operator typically doubles or triples the edge strength, making 300 (double of 150) the most likely outcome.</p>
+            </div>
+        </div>
+
+        <!-- Question 54 -->
+        <div class="question-card">
+            <div class="question-number">Question 54</div>
+            <div class="question-text">
+                A Gaussian filter with σ=3 is applied to an image. What is the approximate filter width where significant smoothing occurs?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 3 pixels</div>
+                <div class="option">B) 6 pixels</div>
+                <div class="option">C) 9 pixels</div>
+                <div class="option">D) 12 pixels</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 9 pixels
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: σ = 3</div>
+                <div class="step">2. Significant smoothing occurs within 3σ</div>
+                <div class="step">3. Width = 3 × σ = 3 × 3 = 9 pixels</div>
+                <p><strong>Reason:</strong> For a Gaussian filter, significant smoothing occurs within approximately 3σ width, which is 3 × 3 = 9 pixels in this case.</p>
+            </div>
+        </div>
+
+        <!-- Question 55 -->
+        <div class="question-card">
+            <div class="question-number">Question 55</div>
+            <div class="question-text">
+                A 512 × 512 image is filtered using a 3 × 3 averaging filter. How many total computations are required?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 512²</div>
+                <div class="option">B) 3²×512²</div>
+                <div class="option">C) 2³×512²</div>
+                <div class="option">D) 512³</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 3²×512²
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Image size = 512 × 512 pixels</div>
+                <div class="step">2. Filter size = 3 × 3</div>
+                <div class="step">3. Computations per pixel = 3² = 9</div>
+                <div class="step">4. Total computations = 9 × 512² = 3²×512²</div>
+                <p><strong>Reason:</strong> For each pixel in the 512×512 image, we need to perform 3×3=9 computations (one for each element in the filter), leading to 3²×512² total computations.</p>
+            </div>
+        </div>
+
+        <!-- Question 56 -->
+        <div class="question-card">
+            <div class="question-number">Question 56</div>
+            <div class="question-text">
+                A high-boost filter is applied with A=1.5. If the original intensity is 100 and the mask response is 20, what is the new intensity?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 100</div>
+                <div class="option">B) 120</div>
+                <div class="option">C) 130</div>
+                <div class="option">D) 150</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 130
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: A = 1.5, original intensity = 100, mask response = 20</div>
+                <div class="step">2. Formula: new intensity = A × original intensity - mask response</div>
+                <div class="step">3. Calculate: 1.5 × 100 - 20 = 150 - 20 = 130</div>
+                <p><strong>Reason:</strong> For a high-boost filter, new intensity = A × original intensity - mask response = 1.5 × 100 - 20 = 130.</p>
+            </div>
+        </div>
+
+        <!-- Question 57 -->
+        <div class="question-card">
+            <div class="question-number">Question 57</div>
+            <div class="question-text">
+                If a city-block distance transform is applied between (2,3) and (7,8), what is the computed distance?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 4</div>
+                <div class="option">B) 5</div>
+                <div class="option">C) 6</div>
+                <div class="option">D) 7</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 5
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: point1 = (2,3), point2 = (7,8)</div>
+                <div class="step">2. Calculate x difference: |7-2| = 5</div>
+                <div class="step">3. Calculate y difference: |8-3| = 5</div>
+                <div class="step">4. Sum differences: 5 + 5 = 10</div>
+                <p><strong>Reason:</strong> City-block distance = |x2-x1| + |y2-y1| = |7-2| + |8-3| = 5 + 5 = 10.</p>
+            </div>
+        </div>
+
+        <!-- Question 58 -->
+        <div class="question-card">
+            <div class="question-number">Question 58</div>
+            <div class="question-text">
+                A Hough transform is applied to detect a line at 45°. What would be the peak value in the accumulator array if 20 edge pixels contribute?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 5</div>
+                <div class="option">B) 10</div>
+                <div class="option">C) 15</div>
+                <div class="option">D) 20</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) 20
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The peak value in the accumulator array would be equal to the number of edge pixels that contribute to the line, which is 20 in this case.</p>
+            </div>
+        </div>
+
+        <!-- Question 59 -->
+        <div class="question-card">
+            <div class="question-number">Question 59</div>
+            <div class="question-text">
+                A 5 × 5 median filter is applied to a noisy image. What is the minimum number of pixels affected?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 5</div>
+                <div class="option">B) 10</div>
+                <div class="option">C) 25</div>
+                <div class="option">D) 50</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 25
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>A 5×5 median filter affects a 5×5=25 pixel neighborhood for each output pixel.</p>
+            </div>
+        </div>
+
+        <!-- Question 60 -->
+        <div class="question-card">
+            <div class="question-number">Question 60</div>
+            <div class="question-text">
+                A thresholding operation fails due to non-uniform illumination. Which technique is best suited?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Global thresholding</div>
+                <div class="option">B) Adaptive thresholding</div>
+                <div class="option">C) Sobel edge detection</div>
+                <div class="option">D) Hough transform</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Adaptive thresholding
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Adaptive thresholding is best suited for handling non-uniform illumination because it computes different thresholds for different regions of the image based on local intensity characteristics.</p>
+            </div>
+        </div>
+
+        <!-- Question 61 -->
+        <div class="question-card">
+            <div class="question-number">Question 61</div>
+            <div class="question-text">
+                In the RGB color model, what color is represented by (255, 0, 0)?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Red</div>
+                <div class="option">B) Green</div>
+                <div class="option">C) Blue</div>
+                <div class="option">D) White</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Red
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>In the RGB color model, (255, 0, 0) represents pure red because the red component is at maximum intensity (255) while green and blue components are at minimum (0).</p>
+            </div>
+        </div>
+
+        <!-- Question 62 -->
+        <div class="question-card">
+            <div class="question-number">Question 62</div>
+            <div class="question-text">
+                Using the luminance formula Y = 0.299R + 0.587G + 0.114B, what is the grayscale intensity for RGB values (200, 100, 50)?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 116.5</div>
+                <div class="option">B) 125.8</div>
+                <div class="option">C) 133.2</div>
+                <div class="option">D) 150.0</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 125.8
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Given: R=200, G=100, B=50</div>
+                <div class="step">2. Y = 0.299(200) + 0.587(100) + 0.114(50)</div>
+                <div class="step">3. Y = 59.8 + 58.7 + 5.7 = 125.8</div>
+                <p><strong>Reason:</strong> The luminance formula weights the RGB components according to human perception, with green having the highest weight.</p>
+            </div>
+        </div>
+
+        <!-- Question 63 -->
+        <div class="question-card">
+            <div class="question-number">Question 63</div>
+            <div class="question-text">
+                Which of the following is a subtractive color model?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) RGB</div>
+                <div class="option">B) HSV</div>
+                <div class="option">C) CMYK</div>
+                <div class="option">D) YUV</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) CMYK
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>CMYK (Cyan, Magenta, Yellow, Key/Black) is a subtractive color model used in printing, where colors are created by subtracting light through pigments or dyes.</p>
+            </div>
+        </div>
+
+        <!-- Question 64 -->
+        <div class="question-card">
+            <div class="question-number">Question 64</div>
+            <div class="question-text">
+                Which technique is NOT used in JPEG compression?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) DCT</div>
+                <div class="option">B) Run-length encoding</div>
+                <div class="option">C) Wavelet transform</div>
+                <div class="option">D) Huffman coding</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Wavelet transform
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>JPEG uses Discrete Cosine Transform (DCT), run-length encoding, and Huffman coding, but not wavelet transform. Wavelet transform is used in JPEG 2000, not in standard JPEG.</p>
+            </div>
+        </div>
+
+        <!-- Question 65 -->
+        <div class="question-card">
+            <div class="question-number">Question 65</div>
+            <div class="question-text">
+                How many bits per pixel are required for a true-color image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 8</div>
+                <div class="option">B) 16</div>
+                <div class="option">C) 24</div>
+                <div class="option">D) 32</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 24
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. True color requires 8 bits each for R, G, and B</div>
+                <div class="step">2. Total bits = 8 + 8 + 8 = 24 bits</div>
+                <p><strong>Reason:</strong> A true-color image uses 8 bits per channel for each of the three RGB color components, totaling 24 bits per pixel.</p>
+            </div>
+        </div>
+
+        <!-- Question 66 -->
+        <div class="question-card">
+            <div class="question-number">Question 66</div>
+            <div class="question-text">
+                In the CMYK color model, what is the primary purpose of the K (Key) component?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) To save ink</div>
+                <div class="option">B) To improve contrast</div>
+                <div class="option">C) To create pure black</div>
+                <div class="option">D) All of the above</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) All of the above
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The K (Key/Black) component in CMYK serves multiple purposes: it saves ink by replacing CMY combinations that would create black, improves contrast, and creates pure black that's difficult to achieve by mixing CMY.</p>
+            </div>
+        </div>
+
+        <!-- Question 67 -->
+        <div class="question-card">
+            <div class="question-number">Question 67</div>
+            <div class="question-text">
+                If an image contains 100 pixels of value 'A' followed by 50 pixels of value 'B', what is the compression ratio using Run-Length Encoding (RLE)?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1:25</div>
+                <div class="option">B) 1:50</div>
+                <div class="option">C) 1:75</div>
+                <div class="option">D) 1:100</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 1:75
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Original data: 150 pixels (100 'A' + 50 'B')</div>
+                <div class="step">2. RLE encoded: 2 pairs of (value, count)</div>
+                <div class="step">3. Compression ratio = 2:150 = 1:75</div>
+                <p><strong>Reason:</strong> RLE represents the data as two pairs: (A,100) and (B,50), reducing 150 values to just 2 pairs.</p>
+            </div>
+        </div>
+
+        <!-- Question 68 -->
+        <div class="question-card">
+            <div class="question-number">Question 68</div>
+            <div class="question-text">
+                Which type of redundancy does JPEG compression primarily exploit?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Coding redundancy</div>
+                <div class="option">B) Spatial redundancy</div>
+                <div class="option">C) Psycho-visual redundancy</div>
+                <div class="option">D) Temporal redundancy</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Psycho-visual redundancy
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>JPEG primarily exploits psycho-visual redundancy by discarding high-frequency components that the human eye is less sensitive to, using the DCT transform and quantization.</p>
+            </div>
+        </div>
+
+        <!-- Question 69 -->
+        <div class="question-card">
+            <div class="question-number">Question 69</div>
+            <div class="question-text">
+                A 512 × 512 grayscale image uses 8 bits per pixel. What is the file size in KB?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 256 KB</div>
+                <div class="option">B) 512 KB</div>
+                <div class="option">C) 768 KB</div>
+                <div class="option">D) 1024 KB</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 256 KB
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Total pixels = 512 × 512 = 262,144</div>
+                <div class="step">2. Bits per pixel = 8</div>
+                <div class="step">3. Total bits = 262,144 × 8 = 2,097,152 bits</div>
+                <div class="step">4. KB = 2,097,152 ÷ 8 ÷ 1024 = 256 KB</div>
+                <p><strong>Reason:</strong> File size = (width × height × bits per pixel) ÷ 8 ÷ 1024 KB.</p>
+            </div>
+        </div>
+
+        <!-- Question 70 -->
+        <div class="question-card">
+            <div class="question-number">Question 70</div>
+            <div class="question-text">
+                A 1024 × 768 color image uses 24 bits per pixel. What is the file size in KB?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 786 KB</div>
+                <div class="option">B) 1572 KB</div>
+                <div class="option">C) 2358 KB</div>
+                <div class="option">D) 3144 KB</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 2358 KB
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Total pixels = 1024 × 768 = 786,432</div>
+                <div class="step">2. Bits per pixel = 24</div>
+                <div class="step">3. Total bits = 786,432 × 24 = 18,874,368 bits</div>
+                <div class="step">4. KB = 18,874,368 ÷ 8 ÷ 1024 ≈ 2358 KB</div>
+                <p><strong>Reason:</strong> File size = (width × height × bits per pixel) ÷ 8 ÷ 1024 KB.</p>
+            </div>
+        </div>
+
+        <!-- Question 71 -->
+        <div class="question-card">
+            <div class="question-number">Question 71</div>
+            <div class="question-text">
+                What is the main advantage of arithmetic coding over Huffman coding?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Faster compression</div>
+                <div class="option">B) Better compression ratio</div>
+                <div class="option">C) Simpler implementation</div>
+                <div class="option">D) Lower memory usage</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Better compression ratio
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Arithmetic coding achieves better compression ratios than Huffman coding because it can assign fractional bits to symbols, while Huffman coding is limited to whole numbers of bits.</p>
+            </div>
+        </div>
+
+        <!-- Question 72 -->
+        <div class="question-card">
+            <div class="question-number">Question 72</div>
+            <div class="question-text">
+                In RGB color mixing, what color is produced by mixing red and blue?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Yellow</div>
+                <div class="option">B) Cyan</div>
+                <div class="option">C) Magenta</div>
+                <div class="option">D) White</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Magenta
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>In RGB (additive color mixing), combining red and blue light produces magenta. This is because magenta is the absence of green in the RGB color space.</p>
+            </div>
+        </div>
+
+        <!-- Question 73 -->
+        <div class="question-card">
+            <div class="question-number">Question 73</div>
+            <div class="question-text">
+                How many bits per channel are required for a true-color image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 4</div>
+                <div class="option">B) 6</div>
+                <div class="option">C) 8</div>
+                <div class="option">D) 16</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 8
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. True color requires 24 total bits</div>
+                <div class="step">2. Three channels (R, G, B)</div>
+                <div class="step">3. Bits per channel = 24 ÷ 3 = 8</div>
+                <p><strong>Reason:</strong> Each channel in a true-color image uses 8 bits to represent 256 intensity levels per color component.</p>
+            </div>
+        </div>
+
+        <!-- Question 74 -->
+        <div class="question-card">
+            <div class="question-number">Question 74</div>
+            <div class="question-text">
+                Why is black (K) ink used in CMYK printing when it could theoretically be created by mixing CMY?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Cost savings</div>
+                <div class="option">B) Better black quality</div>
+                <div class="option">C) Faster printing</div>
+                <div class="option">D) All of the above</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) All of the above
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Using black ink separately saves cost (less colored ink used), produces better quality blacks (pure black instead of mixed), and allows faster printing (single pass instead of three-color mixing).</p>
+            </div>
+        </div>
+
+        <!-- Question 75 -->
+        <div class="question-card">
+            <div class="question-number">Question 75</div>
+            <div class="question-text">
+                How many different colors can be represented in a 10-bit image (per channel)?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 512</div>
+                <div class="option">B) 768</div>
+                <div class="option">C) 1024</div>
+                <div class="option">D) 2048</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 1024
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Number of bits = 10</div>
+                <div class="step">2. Number of values = 2¹⁰</div>
+                <div class="step">3. 2¹⁰ = 1024</div>
+                <p><strong>Reason:</strong> With 10 bits per channel, each channel can represent 2¹⁰ = 1024 different intensity levels.</p>
+            </div>
+        </div>
+
+        <!-- Question 76 -->
+        <div class="question-card">
+            <div class="question-number">Question 76</div>
+            <div class="question-text">
+                What is the file size of a 1024 × 1024 grayscale image with 8 bits per pixel?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 512 KB</div>
+                <div class="option">B) 1024 KB</div>
+                <div class="option">C) 2048 KB</div>
+                <div class="option">D) 4096 KB</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 1024 KB
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Total pixels = 1024 × 1024 = 1,048,576</div>
+                <div class="step">2. Bits per pixel = 8</div>
+                <div class="step">3. Total bits = 1,048,576 × 8 = 8,388,608 bits</div>
+                <div class="step">4. KB = 8,388,608 ÷ 8 ÷ 1024 = 1024 KB</div>
+                <p><strong>Reason:</strong> File size = (width × height × bits per pixel) ÷ 8 ÷ 1024 KB.</p>
+            </div>
+        </div>
+
+        <!-- Question 77 -->
+        <div class="question-card">
+            <div class="question-number">Question 77</div>
+            <div class="question-text">
+                Which of the following is a lossless compression technique?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) JPEG</div>
+                <div class="option">B) Run-length encoding</div>
+                <div class="option">C) Wavelet transform</div>
+                <div class="option">D) DCT</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Run-length encoding
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Run-length encoding is a lossless compression technique because it preserves all original data by encoding repeated values as pairs of value and count, allowing exact reconstruction of the original data.</p>
+            </div>
+        </div>
+
+        <!-- Question 78 -->
+        <div class="question-card">
+            <div class="question-number">Question 78</div>
+            <div class="question-text">
+                Which compression method is used in PNG format?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) JPEG compression</div>
+                <div class="option">B) DEFLATE</div>
+                <div class="option">C) Wavelet transform</div>
+                <div class="option">D) DCT</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) DEFLATE
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>PNG format uses the DEFLATE compression algorithm, which combines LZ77 and Huffman coding to achieve lossless compression of image data.</p>
+            </div>
+        </div>
+
+        <!-- Question 79 -->
+        <div class="question-card">
+            <div class="question-number">Question 79</div>
+            <div class="question-text">
+                How many intensity levels are possible in an 8-bit grayscale image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 128</div>
+                <div class="option">B) 256</div>
+                <div class="option">C) 512</div>
+                <div class="option">D) 1024</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 256
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Number of bits = 8</div>
+                <div class="step">2. Number of levels = 2⁸</div>
+                <div class="step">3. 2⁸ = 256</div>
+                <p><strong>Reason:</strong> An 8-bit grayscale image can represent 2⁸ = 256 different intensity levels, ranging from 0 (black) to 255 (white).</p>
+            </div>
+        </div>
+
+        <!-- Question 80 -->
+        <div class="question-card">
+            <div class="question-number">Question 80</div>
+            <div class="question-text">
+                What is the purpose of chroma subsampling in image compression?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Reduce color information</div>
+                <div class="option">B) Increase brightness</div>
+                <div class="option">C) Enhance edges</div>
+                <div class="option">D) Remove noise</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Reduce color information
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Chroma subsampling reduces the color information (chrominance) while maintaining full luminance resolution, exploiting the human visual system's lower sensitivity to color details compared to brightness details.</p>
+            </div>
+        </div>
+
+        <!-- Question 81 -->
+        <div class="question-card">
+            <div class="question-number">Question 81</div>
+            <div class="question-text">
+                What is the Euler number for a binary object with 2 connected components and 1 hole?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1</div>
+                <div class="option">B) 2</div>
+                <div class="option">C) 3</div>
+                <div class="option">D) 4</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 1
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Euler number = Number of connected components - Number of holes</div>
+                <div class="step">2. Connected components = 2</div>
+                <div class="step">3. Holes = 1</div>
+                <div class="step">4. Euler number = 2 - 1 = 1</div>
+                <p><strong>Reason:</strong> The Euler number is calculated by subtracting the number of holes from the number of connected components.</p>
+            </div>
+        </div>
+
+        <!-- Question 82 -->
+        <div class="question-card">
+            <div class="question-number">Question 82</div>
+            <div class="question-text">
+                What does eccentricity measure as a shape feature?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Area</div>
+                <div class="option">B) Elongation</div>
+                <div class="option">C) Roundness</div>
+                <div class="option">D) Perimeter</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Elongation
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Eccentricity measures how elongated or stretched a shape is, with values ranging from 0 (perfect circle) to 1 (line segment). It is calculated using the ratio of the major and minor axes of the shape.</p>
+            </div>
+        </div>
+
+        <!-- Question 83 -->
+        <div class="question-card">
+            <div class="question-number">Question 83</div>
+            <div class="question-text">
+                Why is the HSI color model suitable for object recognition?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Better color separation</div>
+                <div class="option">B) Intensity independence</div>
+                <div class="option">C) Hardware compatibility</div>
+                <div class="option">D) Lower memory usage</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Intensity independence
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>The HSI model separates color information (Hue and Saturation) from intensity, making object recognition more robust to lighting variations since the color components are independent of illumination intensity.</p>
+            </div>
+        </div>
+
+        <!-- Question 84 -->
+        <div class="question-card">
+            <div class="question-number">Question 84</div>
+            <div class="question-text">
+                What does a confusion matrix show in pattern recognition?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Error distribution</div>
+                <div class="option">B) Feature correlation</div>
+                <div class="option">C) Classification accuracy</div>
+                <div class="option">D) All of the above</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: D) All of the above
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>A confusion matrix shows error distribution through misclassifications, feature correlation through patterns of errors, and classification accuracy through correct predictions, making it a comprehensive tool for evaluating classifier performance.</p>
+            </div>
+        </div>
+
+        <!-- Question 85 -->
+        <div class="question-card">
+            <div class="question-number">Question 85</div>
+            <div class="question-text">
+                If precision is 0.8 and recall is 0.6, what is the F1-score?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 0.6</div>
+                <div class="option">B) 0.68</div>
+                <div class="option">C) 0.7</div>
+                <div class="option">D) 0.8</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 0.68
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. F1 = 2 × (precision × recall) / (precision + recall)</div>
+                <div class="step">2. F1 = 2 × (0.8 × 0.6) / (0.8 + 0.6)</div>
+                <div class="step">3. F1 = 2 × 0.48 / 1.4</div>
+                <div class="step">4. F1 = 0.96 / 1.4 = 0.68</div>
+                <p><strong>Reason:</strong> The F1-score is the harmonic mean of precision and recall, providing a balanced measure of classifier performance.</p>
+            </div>
+        </div>
+
+        <!-- Question 86 -->
+        <div class="question-card">
+            <div class="question-number">Question 86</div>
+            <div class="question-text">
+                Which method is based on correlation for finding objects in an image?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Template matching</div>
+                <div class="option">B) Edge detection</div>
+                <div class="option">C) Region growing</div>
+                <div class="option">D) Thresholding</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Template matching
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Template matching uses correlation between a template and image regions to find objects, measuring the similarity between the template and different positions in the image.</p>
+            </div>
+        </div>
+
+        <!-- Question 87 -->
+        <div class="question-card">
+            <div class="question-number">Question 87</div>
+            <div class="question-text">
+                Which loss function is commonly used for classification tasks?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Mean squared error</div>
+                <div class="option">B) Cross-entropy loss</div>
+                <div class="option">C) Huber loss</div>
+                <div class="option">D) L1 loss</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Cross-entropy loss
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Cross-entropy loss is particularly well-suited for classification tasks because it measures the difference between predicted probability distributions and actual class labels, providing good gradients for training.</p>
+            </div>
+        </div>
+
+        <!-- Question 88 -->
+        <div class="question-card">
+            <div class="question-number">Question 88</div>
+            <div class="question-text">
+                What is the Euler number for a shape with 3 connected components and 2 holes?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1</div>
+                <div class="option">B) 2</div>
+                <div class="option">C) 3</div>
+                <div class="option">D) 5</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 1
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Euler number = Number of connected components - Number of holes</div>
+                <div class="step">2. Connected components = 3</div>
+                <div class="step">3. Holes = 2</div>
+                <div class="step">4. Euler number = 3 - 2 = 1</div>
+                <p><strong>Reason:</strong> The Euler number is calculated by subtracting the number of holes from the number of connected components.</p>
+            </div>
+        </div>
+
+        <!-- Question 89 -->
+        <div class="question-card">
+            <div class="question-number">Question 89</div>
+            <div class="question-text">
+                What is GLCM used for in image processing?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Edge detection</div>
+                <div class="option">B) Color correction</div>
+                <div class="option">C) Texture features</div>
+                <div class="option">D) Noise reduction</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) Texture features
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Gray Level Co-occurrence Matrix (GLCM) is used to compute texture features by analyzing the spatial relationships between pixel intensities, providing measures like contrast, correlation, energy, and homogeneity.</p>
+            </div>
+        </div>
+
+        <!-- Question 90 -->
+        <div class="question-card">
+            <div class="question-number">Question 90</div>
+            <div class="question-text">
+                What property of Hu Moments makes them useful for shape recognition?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) They are invariant to translation, rotation, and scale</div>
+                <div class="option">B) They are sensitive to noise</div>
+                <div class="option">C) They are only applicable to binary images</div>
+                <div class="option">D) They are not useful for shape recognition</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) They are invariant to translation, rotation, and scale
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Hu Moments are invariant to translation, rotation, and scale, making them useful for shape recognition in images where these transformations are expected.</p>
+            </div>
+        </div>
+
+        <!-- Question 91 -->
+        <div class="question-card">
+            <div class="question-number">Question 91</div>
+            <div class="question-text">
+                Why is cross-entropy loss preferred for neural networks in classification?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Faster convergence</div>
+                <div class="option">B) Better gradients</div>
+                <div class="option">C) Lower memory usage</div>
+                <div class="option">D) Simpler implementation</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Better gradients
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Cross-entropy loss provides better gradients for training neural networks in classification tasks because it penalizes confident wrong predictions more heavily and avoids the vanishing gradient problem common with other loss functions.</p>
+            </div>
+        </div>
+
+        <!-- Question 92 -->
+        <div class="question-card">
+            <div class="question-number">Question 92</div>
+            <div class="question-text">
+                What does a Bayesian Classifier minimize?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) Classification error</div>
+                <div class="option">B) Computational cost</div>
+                <div class="option">C) Memory usage</div>
+                <div class="option">D) Feature dimensionality</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) Classification error
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>A Bayesian Classifier minimizes the probability of misclassification by using Bayes' theorem to make optimal decisions based on prior probabilities and class-conditional probabilities.</p>
+            </div>
+        </div>
+
+        <!-- Question 93 -->
+        <div class="question-card">
+            <div class="question-number">Question 93</div>
+            <div class="question-text">
+                If the variance of pixel intensities is 100, what is the standard deviation?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 5</div>
+                <div class="option">B) 10</div>
+                <div class="option">C) 15</div>
+                <div class="option">D) 20</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 10
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Standard deviation = √variance</div>
+                <div class="step">2. Variance = 100</div>
+                <div class="step">3. Standard deviation = √100 = 10</div>
+                <p><strong>Reason:</strong> The standard deviation is the square root of the variance, providing a measure of spread in the same units as the original data.</p>
+            </div>
+        </div>
+
+        <!-- Question 94 -->
+        <div class="question-card">
+            <div class="question-number">Question 94</div>
+            <div class="question-text">
+                What is the Euler number for a binary image with 4 connected components and 2 holes?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 2</div>
+                <div class="option">B) 4</div>
+                <div class="option">C) 6</div>
+                <div class="option">D) 8</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: A) 2
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Euler number = Number of connected components - Number of holes</div>
+                <div class="step">2. Connected components = 4</div>
+                <div class="step">3. Holes = 2</div>
+                <div class="step">4. Euler number = 4 - 2 = 2</div>
+                <p><strong>Reason:</strong> The Euler number is calculated by subtracting the number of holes from the number of connected components.</p>
+            </div>
+        </div>
+
+        <!-- Question 95 -->
+        <div class="question-card">
+            <div class="question-number">Question 95</div>
+            <div class="question-text">
+                If a shape has area 100 and perimeter 40, what is its compactness?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 12.57</div>
+                <div class="option">B) 15.71</div>
+                <div class="option">C) 16.00</div>
+                <div class="option">D) 18.85</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 16.00
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Compactness = perimeter² / area</div>
+                <div class="step">2. Perimeter = 40, Area = 100</div>
+                <div class="step">3. Compactness = 40² / 100</div>
+                <div class="step">4. Compactness = 1600 / 100 = 16.00</div>
+                <p><strong>Reason:</strong> Compactness is a shape measure that relates the perimeter to the area, with a circle having the minimum value of 4π ≈ 12.57.</p>
+            </div>
+        </div>
+
+        <!-- Question 96 -->
+        <div class="question-card">
+            <div class="question-number">Question 96</div>
+            <div class="question-text">
+                How many bits per pixel are needed for a grayscale image with 64 intensity levels?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 4</div>
+                <div class="option">B) 6</div>
+                <div class="option">C) 8</div>
+                <div class="option">D) 16</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 6
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Number of levels = 64</div>
+                <div class="step">2. 2⁶ = 64</div>
+                <div class="step">3. Therefore, 6 bits are needed</div>
+                <p><strong>Reason:</strong> The number of bits needed is log₂(number of levels), and since 2⁶ = 64, we need 6 bits per pixel.</p>
+            </div>
+        </div>
+
+        <!-- Question 97 -->
+        <div class="question-card">
+            <div class="question-number">Question 97</div>
+            <div class="question-text">
+                What is the total bit-depth of a color image with 8 bits per channel in RGB format?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 8</div>
+                <div class="option">B) 16</div>
+                <div class="option">C) 24</div>
+                <div class="option">D) 32</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: C) 24
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. RGB has 3 channels</div>
+                <div class="step">2. Each channel has 8 bits</div>
+                <div class="step">3. Total bits = 3 × 8 = 24</div>
+                <p><strong>Reason:</strong> The total bit-depth is the sum of bits used for each color channel (Red, Green, and Blue).</p>
+            </div>
+        </div>
+
+        <!-- Question 98 -->
+        <div class="question-card">
+            <div class="question-number">Question 98</div>
+            <div class="question-text">
+                If an image compression algorithm reduces a 100 KB file to 20 KB, what is the compression ratio?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 1:5</div>
+                <div class="option">B) 5:1</div>
+                <div class="option">C) 1:20</div>
+                <div class="option">D) 20:1</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 5:1
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Original size = 100 KB</div>
+                <div class="step">2. Compressed size = 20 KB</div>
+                <div class="step">3. Ratio = 100:20 = 5:1</div>
+                <p><strong>Reason:</strong> The compression ratio is expressed as original size : compressed size, simplified to lowest terms.</p>
+            </div>
+        </div>
+
+        <!-- Question 99 -->
+        <div class="question-card">
+            <div class="question-number">Question 99</div>
+            <div class="question-text">
+                Which of the following is a lossless compression method?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) JPEG</div>
+                <div class="option">B) Huffman coding</div>
+                <div class="option">C) DCT</div>
+                <div class="option">D) Wavelet transform</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) Huffman coding
+            </div>
+
+            <div class="solution">
+                <strong>Reason:</strong>
+                <p>Huffman coding is a lossless compression method that assigns variable-length codes to symbols based on their frequencies, ensuring perfect reconstruction of the original data.</p>
+            </div>
+        </div>
+
+        <!-- Question 100 -->
+        <div class="question-card">
+            <div class="question-number">Question 100</div>
+            <div class="question-text">
+                How many gray levels can be represented with 7 bits per pixel?
+            </div>
+            
+            <div class="options">
+                <div class="option">A) 64</div>
+                <div class="option">B) 128</div>
+                <div class="option">C) 256</div>
+                <div class="option">D) 512</div>
+            </div>
+
+            <div class="correct-answer">
+                Answer: B) 128
+            </div>
+
+            <div class="solution">
+                <strong>Solution:</strong>
+                <div class="step">1. Number of bits = 7</div>
+                <div class="step">2. Number of levels = 2⁷</div>
+                <div class="step">3. 2⁷ = 128</div>
+                <p><strong>Reason:</strong> With 7 bits per pixel, we can represent 2⁷ = 128 different gray levels, ranging from 0 to 127.</p>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <h3>Premium Study Materials</h3>
+            <ul>
+                <li>✓ Complete DIP Course Notes</li>
+                <li>✓ Practice Problems & Solutions</li>
+                <li>✓ Video Lectures</li>
+                <li>✓ Previous Year Papers</li>
+            </ul>
+            <button class="cta-button">Get Access Now</button>
+            <div class="stats">
+                <span>⭐ 4.8/5 Rating</span>
+                <span>👥 10k+ Students</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-buttons">
+        <button class="nav-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+        <button class="nav-button" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">↓</button>
+    </div>
+
+    <script>
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({
+                top: document.documentElement.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // Enhanced search functionality
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const searchText = e.target.value.toLowerCase();
+            const questions = document.getElementsByClassName('question-card');
+            
+            Array.from(questions).forEach(question => {
+                const questionText = question.querySelector('.question-text').textContent.toLowerCase();
+                const questionNumber = question.querySelector('.question-number').textContent.toLowerCase();
+                const options = Array.from(question.querySelectorAll('.option')).map(opt => opt.textContent.toLowerCase());
+                
+                if (questionText.includes(searchText) || 
+                    questionNumber.includes(searchText) || 
+                    options.some(opt => opt.includes(searchText))) {
+                    question.style.display = 'block';
+                } else {
+                    question.style.display = 'none';
+                }
+            });
+        });
+
+        // Add animation to ad containers
+        document.querySelectorAll('.ad-container').forEach(container => {
+            container.addEventListener('mouseenter', () => {
+                container.style.transform = 'translateY(-5px)';
+            });
+            
+            container.addEventListener('mouseleave', () => {
+                container.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add click handlers for ad buttons
+        document.querySelectorAll('.ad-button').forEach(button => {
+            button.addEventListener('click', () => {
+                alert('Thank you for your interest! This is a demo advertisement.');
+            });
+        });
+    </script>
+</body>
+</html> 
